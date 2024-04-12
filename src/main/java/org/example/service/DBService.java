@@ -21,7 +21,7 @@ public class DBService {
             DriverManager.registerDriver(pgDriver);
 
             Properties properties = new Properties();
-            properties.put("login", "root");
+            properties.put("user", "root");
             properties.put("password", "123");
             String url = "jdbc:postgresql://localhost:5432/java_tech";
 
