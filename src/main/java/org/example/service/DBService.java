@@ -8,6 +8,7 @@ import java.util.Properties;
 
 public class DBService {
     public DBService() {
+        connect();
     }
 
     public static Connection connect() {
