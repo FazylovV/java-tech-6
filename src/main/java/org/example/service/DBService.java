@@ -20,7 +20,7 @@ public class DBService {
             Properties properties = new Properties();
             properties.put("login", "root");
             properties.put("password", "123");
-            String url = "jdbc:postgresql://localhost:5432/postgres";
+            String url = "jdbc:postgresql://localhost:5432/java_tech";
 
             Connection connection = DriverManager.getConnection(url, properties);
             return connection;
