@@ -3,6 +3,7 @@ package org.example.servlet;
 
 import org.example.model.User;
 import org.example.service.AccountService;
+import org.example.service.DBService;
 import org.example.service.PathUtility;
 
 
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/"})
 public class LoginServlet extends HttpServlet {
+    private final DBService dbService = new DBService();
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -33,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        User data = AccountService.getUserByLogin(login);
+        User data = dbService.getUserByLogin(login);
         if (data == null || !data.getPassword().equals(pass)) {
             resp.setContentType("text/html;charset=utf-8");
             resp.getWriter().println("Неправильный логин или пароль");

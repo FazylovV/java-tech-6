@@ -1,5 +1,8 @@
 package org.example.service;
 
+import org.example.dao.UserDAO;
+import org.example.model.User;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -9,10 +12,10 @@ import java.util.Properties;
 public class DBService {
     private final Connection connection;
     public DBService() {
-        this.connection = connect();
+        this.connection = connectPG();
     }
 
-    public static Connection connect() {
+    public static Connection connectPG() {
         try {
             Driver pgDriver = (Driver) Class.forName("org.postgresql.Driver").newInstance();
             DriverManager.registerDriver(pgDriver);
@@ -29,5 +32,28 @@ public class DBService {
         }
 
         return null;
+    }
+
+    public User getUserByLogin(String login) {
+        return (new UserDAO(connection).getUserByLogin(login));
+    }
+
+    public void addUser(User user) {
+        try {
+            connection.setAutoCommit(false);
+            UserDAO dao = new UserDAO(connection);
+            dao.addUser(user);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ignore) {
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ignore) {
+            }
+        }
     }
 }
