@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBService {
+    private final Connection connection;
     public DBService() {
-        connect();
+        this.connection = connect();
     }
 
     public static Connection connect() {
